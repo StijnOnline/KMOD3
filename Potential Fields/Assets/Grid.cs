@@ -14,46 +14,74 @@ public class Grid : MonoBehaviour {
     [SerializeField] private int setGridSize;
     [SerializeField] private static float[,] grid;
     [SerializeField] private List<Vector2Int> interestPoints;
+    [SerializeField] private List<Vector2Int> obstaclePoints;
 
-    const string TARGET_NAME = "Target";
-    const string OBSTACLE_NAME = "Obstacle";
+    [SerializeField] private string TARGET_NAME = "Target";
+    [SerializeField] private float TARGET_STRENGTH;
+    [SerializeField] private float TARGET_RANGE;
+
+    [SerializeField] private string OBSTACLE_NAME = "Obstacle";
+    [SerializeField] private float OBSTACLE_STRENGTH;
+    [SerializeField] private float OBSTACLE_RANGE;
 
     void Start() {
         gridSize = setGridSize;
-        grid = new float[gridSize, gridSize];
-        FindInterestPoints();
-        CalculateGrid();
 
-
-        //optional
-        NormalizeGrid();
-
-        SubtractEnvironment();
-
-
-        SpawnVisualGrid();
-
+        Calculate();
     }
 
     void Update() {
-
+        if(Input.GetMouseButtonDown(0)) {
+            Calculate();
+        }
     }
-    void FindInterestPoints() {
-        interestPoints.Clear();
+
+    void Calculate() {
+        CreateGrid();
+        ScanEnvironment();
+        CalculateGrid();
+
+
+        SubtractEnvironment();
+
+        NormalizeGrid();
+
+
+
+        SpawnVisualGrid();
+    }
+
+    void CreateGrid() {
+
+        grid = new float[gridSize, gridSize];
+
+        for(int x = 0; x < grid.GetLength(0); x++) {
+            for(int y = 0; y < grid.GetLength(0); y++) {
+                grid[x, y] = -1;
+            }
+        }
+    }
+
+
+    void ScanEnvironment() {
         for(int x = 0; x < grid.GetLength(0); x++) {
             for(int y = 0; y < grid.GetLength(0); y++) {
                 Vector2Int pos = new Vector2Int(x, y);
-                if(environment.GetTile((Vector3Int)pos)?.name == TARGET_NAME)
+                string tileName = environment.GetTile((Vector3Int)pos)?.name;
+                if(tileName == TARGET_NAME)
                     interestPoints.Add(pos);
+                if(tileName == OBSTACLE_NAME)
+                    obstaclePoints.Add(pos);
             }
         }
     }
     void CalculateGrid() {
         for(int x = 0; x < grid.GetLength(0); x++) {
             for(int y = 0; y < grid.GetLength(0); y++) {
-                grid[x, y] = 0;
+                //grid[x, y] = 0;
                 foreach(Vector2Int pos in interestPoints) {
-                    grid[x, y] += Vector2Int.Distance(new Vector2Int(x, y), pos);
+                    float d = Vector2Int.Distance(new Vector2Int(x, y), pos);
+                    grid[x, y] += TARGET_STRENGTH * (Mathf.Max(0f,TARGET_RANGE - d) / TARGET_RANGE);
                 }
             }
         }
@@ -61,9 +89,9 @@ public class Grid : MonoBehaviour {
     void SubtractEnvironment() {
         for(int x = 0; x < grid.GetLength(0); x++) {
             for(int y = 0; y < grid.GetLength(0); y++) {
-                Vector2Int pos = new Vector2Int(x, y);
-                if(environment.GetTile((Vector3Int)pos)?.name == OBSTACLE_NAME)
-                    grid[pos.x, pos.y] = Mathf.Infinity;
+                foreach(Vector2Int pos in obstaclePoints) {
+                    grid[x, y] -= OBSTACLE_STRENGTH * Mathf.Max(0f,OBSTACLE_RANGE -((pos - new Vector2Int(x, y))).magnitude)/ OBSTACLE_RANGE;
+                }
             }
         }
     }
@@ -82,8 +110,8 @@ public class Grid : MonoBehaviour {
             Vector2Int pos = new Vector2Int(i % gridSize, i / gridSize);
 
             potentialFieldsMap.SetTile((Vector3Int)pos, visualTile);
-
-            potentialFieldsMap.SetColor((Vector3Int)pos, new Color(grid[pos.x, pos.y], 0, 0));
+            float val = grid[pos.x, pos.y];
+            potentialFieldsMap.SetColor((Vector3Int)pos, new Color(val > 0 ? val : 0, 0, val < 0 ? -val : 0));
         }
 
     }
@@ -92,7 +120,7 @@ public class Grid : MonoBehaviour {
         Vector2Int gridPos = Vector2Int.FloorToInt(pos);
 
         Vector2Int bestDir = Vector2Int.zero;
-        float min = float.MaxValue;
+        float max = float.MinValue;
         for(int x = -1; x <= 1; x++) {
             for(int y = -1; y <= 1; y++) {
 
@@ -103,8 +131,8 @@ public class Grid : MonoBehaviour {
                 if(nextPos.x < 0 || nextPos.x >= gridSize || nextPos.y < 0 || nextPos.y >= gridSize)
                     continue;
 
-                if(grid[nextPos.x, nextPos.y] < min) {
-                    min = grid[nextPos.x, nextPos.y];
+                if(grid[nextPos.x, nextPos.y] > max) {
+                    max = grid[nextPos.x, nextPos.y];
                     bestDir = nextPos - gridPos;
                 }
 
