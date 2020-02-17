@@ -1,0 +1,8 @@
+C:\Users\stijn\Documents\GitHub\KMOD3\RoboCode Bots\RoboCode\bin\Release\SVD.TestRobot.dll
+C:\Users\stijn\Documents\GitHub\KMOD3\RoboCode Bots\RoboCode\bin\Release\SVD.TestRobot.pdb
+C:\Users\stijn\Documents\GitHub\KMOD3\RoboCode Bots\RoboCode\bin\Release\robocode.dll
+C:\Users\stijn\Documents\GitHub\KMOD3\RoboCode Bots\RoboCode\bin\Release\robocode.xml
+C:\Users\stijn\Documents\GitHub\KMOD3\RoboCode Bots\RoboCode\obj\Release\RoboCode.csprojAssemblyReference.cache
+C:\Users\stijn\Documents\GitHub\KMOD3\RoboCode Bots\RoboCode\obj\Release\RoboCode.csproj.CopyComplete
+C:\Users\stijn\Documents\GitHub\KMOD3\RoboCode Bots\RoboCode\obj\Release\SVD.TestRobot.dll
+C:\Users\stijn\Documents\GitHub\KMOD3\RoboCode Bots\RoboCode\obj\Release\SVD.TestRobot.pdb

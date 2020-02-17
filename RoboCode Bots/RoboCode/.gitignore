@@ -1,0 +1,7 @@
+/v16
+/bin/Debug/
+/obj/Debug/
+
+.vs/
+*.csproj
+*.sln
