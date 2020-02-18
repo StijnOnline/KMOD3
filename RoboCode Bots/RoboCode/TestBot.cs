@@ -1,29 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Robocode;
+using Robocode.Util;
+using System.Drawing;
 
 namespace SVD {
     public class TestBot : Robot {
+
+        bool scanning = true;
+        double target;
+
         public override void Run() {
             IsAdjustGunForRobotTurn = true;
-            IsAdjustRadarForGunTurn = true;
-            IsAdjustRadarForRobotTurn = true;
+            
 
-
+            while(scanning) {
+                //based on location guess best spin direction
+                FastScan(true);
+            }
+                TurnGunRight(Utils.NormalRelativeAngleDegrees(target- GunHeading));
             while(true) {
-                TurnRight(5);
+                Fire(5);
+
             }
 
             
 
         }
 
+        void FastScan(bool right) {
+            IsAdjustRadarForGunTurn = false;
+            TurnGunRight(20 * (right ? 1 : -1));
+            TurnRadarRight(45 * (right ? 1 : -1));
+            IsAdjustRadarForGunTurn = true;
+        }
+
 
         public override void OnScannedRobot(ScannedRobotEvent evnt) {
             //Scan() if inside, then will restart this func
+            scanning = false;
+
+
+            target = Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing);
+
+            //TurnRadarRight(2.0 * Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing - RadarHeading));
+            
         }
 
 
