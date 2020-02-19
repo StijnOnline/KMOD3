@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace SVD.BehaviourTree {
     abstract class DecoratorNode : BTNode {
+        public DecoratorNode(BlackBoard blackBoard) : base(blackBoard) { }
+
         public BTNode child;
     }
 }

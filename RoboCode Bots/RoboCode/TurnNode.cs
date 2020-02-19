@@ -8,8 +8,10 @@ using Robocode;
 
 namespace SVD {
     class TurnNode : ActionNode {
-        public override void init() {
 
+        public TurnNode(BlackBoard blackBoard) : base(blackBoard) { }
+
+        public override void init() {
         }
 
         public override Status process() {

@@ -6,17 +6,23 @@ using System.Threading.Tasks;
 
 namespace SVD.BehaviourTree {
     abstract class BTNode {
-        public enum Status {
-            Running,
-            Failure,
-            Succes
+
+        public BTNode(BlackBoard blackBoard) {
+            this.blackBoard = blackBoard;
         }
 
+        //public bool initialized;
         public Status status;
         public BlackBoard blackBoard;
 
         public abstract void init();
 
         public abstract Status process();
+
+        public enum Status {
+            Running,
+            Failure,
+            Succes
+        }
     }
 }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SVD.BehaviourTree {
     abstract class CompositeNode : BTNode {
-        public BTNode[] childs;
+        public List<BTNode> childs = new List<BTNode>();
 
+        public CompositeNode(BlackBoard blackBoard) : base(blackBoard) { }
     }
 }

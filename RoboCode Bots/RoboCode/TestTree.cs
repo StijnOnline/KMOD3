@@ -16,8 +16,11 @@ namespace SVD {
             blackBoard.setData("Robot", robot);
         }
 
-        public void process() {
-            masterNode.process();
+        public override void init() {
+        }
+
+        public override BTNode.Status process() {
+            return masterNode.process();
         }
     }
 }

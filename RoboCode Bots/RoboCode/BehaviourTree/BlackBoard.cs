@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SVD.BehaviourTree {
     class BlackBoard {
-        public Dictionary<string, object> values;
+        public Dictionary<string, object> values = new Dictionary<string, object>();
+
         public T getData<T>(string name) {
             return (T) values[name];
         }

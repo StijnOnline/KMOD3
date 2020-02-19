@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 namespace SVD.BehaviourTree {
     class SequenceNode : CompositeNode {
 
+        public SequenceNode(BlackBoard blackBoard) : base(blackBoard) { }
+
         public override void init() {
-            throw new NotImplementedException();
         }
 
         public override Status process() {
-            for(int i = 0; i < childs.Length; i++) {
+            for(int i = 0; i < childs.Count; i++) {
                 Status s = childs[i].process();
                 if(s == Status.Running)
                     return Status.Running;

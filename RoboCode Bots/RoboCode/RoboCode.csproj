@@ -49,7 +49,7 @@
     <Compile Include="BehaviourTree\BlackBoard.cs" />
     <Compile Include="BehaviourTree\BTNode.cs" />
     <Compile Include="TestTree.cs" />
-    <Compile Include="CompositeNode.cs" />
+    <Compile Include="BehaviourTree\CompositeNode.cs" />
     <Compile Include="BehaviourTree\DecoratorNode.cs" />
     <Compile Include="BehaviourTree\SequenceNode.cs" />
     <Compile Include="TestBot.cs" />

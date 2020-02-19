@@ -1,6 +1,7 @@
 ﻿
 using Robocode;
 using Robocode.Util;
+using SVD.BehaviourTree;
 using System.Drawing;
 
 namespace SVD {
@@ -16,8 +17,20 @@ namespace SVD {
             Ahead(1000);
             tree = new TestTree();
             tree.init(this);
-            tree.masterNode = new TurnNode();
-            tree.process();
+
+            CompositeNode sequencer = new SequenceNode(tree.blackBoard);
+
+            tree.masterNode = sequencer;
+
+            sequencer.childs.Add(new TurnNode(tree.blackBoard));
+            sequencer.childs.Add(new TurnNode(tree.blackBoard));
+
+            //BTNode.Status s;
+            //do {
+            //    s = tree.process();
+            //}
+            //while(s == BTNode.Status.Running);
+            
 
 
             IsAdjustGunForRobotTurn = true;
