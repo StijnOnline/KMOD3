@@ -6,22 +6,34 @@ using System.Drawing;
 namespace SVD {
     public class TestBot : Robot {
 
+        TestTree tree;
         bool scanning = true;
         double target;
 
+        
+
         public override void Run() {
+            tree = new TestTree();
+            tree.init(this);
+            tree.masterNode = new TurnNode();
+            tree.process();
+
+
             IsAdjustGunForRobotTurn = true;
             
 
-            while(scanning) {
-                //based on location guess best spin direction
-                FastScan(true);
-            }
-                TurnGunRight(Utils.NormalRelativeAngleDegrees(target- GunHeading));
-            while(true) {
-                Fire(5);
+            //while(scanning) {
+            //    //based on location guess best spin direction
+            //    FastScan(true);
+            //}
+            //    TurnGunRight(Utils.NormalRelativeAngleDegrees(target- GunHeading));
+            //while(true) {
+            //    Fire(5);
+            //}
 
-            }
+
+
+
 
             
 
