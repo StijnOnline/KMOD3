@@ -13,6 +13,7 @@ namespace SVD {
         
 
         public override void Run() {
+            Ahead(1000);
             tree = new TestTree();
             tree.init(this);
             tree.masterNode = new TurnNode();

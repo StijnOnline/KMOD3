@@ -10,6 +10,8 @@ namespace SVD {
     class TestTree : BehaviourTree.BehaviourTree {
 
         public void init(Robot robot) {
+            blackBoard = new BlackBoard();
+            
             blackBoard.setData("Dir",90d);
             blackBoard.setData("Robot", robot);
         }
