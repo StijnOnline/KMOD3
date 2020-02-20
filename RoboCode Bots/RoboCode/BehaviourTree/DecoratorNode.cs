@@ -9,5 +9,15 @@ namespace SVD.BehaviourTree {
         public DecoratorNode(BlackBoard blackBoard) : base(blackBoard) { }
 
         public BTNode child;
+
+        /// <summary>
+        /// Returns this node
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public DecoratorNode setChild(BTNode node) {
+            child = node;
+            return this;
+        }
     }
 }

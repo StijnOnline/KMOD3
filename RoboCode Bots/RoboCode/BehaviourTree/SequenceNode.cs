@@ -12,10 +12,14 @@ namespace SVD.BehaviourTree {
         public override void init() {
         }
 
+        private int i = 0;
+
         public override Status process() {
-            for(int i = 0; i < childs.Count; i++) {
+            while(i < childs.Count) {
                 Status s = childs[i].process();
-                if(s == Status.Running)
+                if(s == Status.Succes) {
+                    i++;
+                } else if(s == Status.Running)
                     return Status.Running;
                 else if(s == Status.Failure)
                     return Status.Failure;

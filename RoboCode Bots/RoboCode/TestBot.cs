@@ -9,9 +9,9 @@ namespace SVD {
     public class TestBot : Robot {
 
         TestTree tree;
-        bool scanning = true;
-        double target;
-        double estimatetarget;
+        //bool scanning = true;
+        //double target;
+        //double estimatetarget;
         const float ESTIMATE_MULTIPLIER = 10;
 
 
@@ -21,7 +21,7 @@ namespace SVD {
             int d = 1;
 
             //Test Tree
-            /*{
+            {
                 tree = new TestTree();
                 tree.init(this);
 
@@ -29,15 +29,18 @@ namespace SVD {
 
                 tree.masterNode = sequencer;
 
-                sequencer.childs.Add(new TurnNode(tree.blackBoard));
-                sequencer.childs.Add(new TurnNode(tree.blackBoard));
+                //sequencer.addChild(new RepeatUntilSucces(tree.blackBoard).setChild(new FastScanNode(tree.blackBoard)));
+                //sequencer.addChild(new RepeatUntilSucces(tree.blackBoard).setChild(new ShootNode(tree.blackBoard)));
+                sequencer.addChild(new TurnNode(tree.blackBoard));
+                sequencer.addChild(new TurnNode(tree.blackBoard));
+
 
                 BTNode.Status s;
                 do {
                     s = tree.process();
                 }
                 while(s == BTNode.Status.Running);
-            }*/
+            }
 
 
 
@@ -45,9 +48,9 @@ namespace SVD {
 
 
 
-            while(scanning) {
-                //based on location guess best spin direction
-                //Ahead(Rules.MAX_VELOCITY);
+            /*while(scanning) {
+                based on location guess best spin direction
+                Ahead(Rules.MAX_VELOCITY);
                 FastScan(true);
             }
             TurnRadarRight(Utils.NormalRelativeAngleDegrees((target - RadarHeading)) - 45d / 2d);
@@ -66,7 +69,7 @@ namespace SVD {
                     Ahead(Rules.MAX_VELOCITY);
                 }
 
-            }
+            }*/
 
 
 
@@ -76,12 +79,6 @@ namespace SVD {
 
         }
 
-        void FastScan(bool right) {
-            IsAdjustRadarForGunTurn = false;
-            TurnGunRight(20 * (right ? 1 : -1));
-            TurnRadarRight(45 * (right ? 1 : -1));
-            IsAdjustRadarForGunTurn = true;
-        }
 
         public double PredictedGun(double bearing, double dist, double heading, double vel) {
             double radBearing = (bearing * Math.PI / 180);
@@ -97,12 +94,13 @@ namespace SVD {
 
 
         public override void OnScannedRobot(ScannedRobotEvent evnt) {
-            //Scan() if inside, then will restart this func
-            scanning = false;
+            //scanning = false;
+            tree.blackBoard.setData("ScanSucces", true);
+            double target = Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing);
+            tree.blackBoard.setData("Target", target);
+            //estimatetarget = PredictedGun(Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing), evnt.Distance, evnt.Heading, evnt.Velocity);
 
-            target = Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing);
-            estimatetarget = PredictedGun(Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing), evnt.Distance, evnt.Heading, evnt.Velocity);
-
+            //Lock
             //TurnRadarRight(2.0 * Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing - RadarHeading));
 
         }

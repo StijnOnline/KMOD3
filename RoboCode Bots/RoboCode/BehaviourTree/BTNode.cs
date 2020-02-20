@@ -12,7 +12,7 @@ namespace SVD.BehaviourTree {
         }
 
         //public bool initialized;
-        public Status status;
+        private Status status;
         public BlackBoard blackBoard;
 
         public abstract void init();
