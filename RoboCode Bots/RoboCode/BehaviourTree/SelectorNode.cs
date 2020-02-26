@@ -5,25 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SVD.BehaviourTree {
-    class SequenceNode : CompositeNode {
+    class SelectorNode : CompositeNode {
 
-        //public SequenceNode(BlackBoard blackBoard) : base(blackBoard) { }
+        //public SelectorNode(BlackBoard blackBoard) : base(blackBoard) { }
 
         public override void init() {
         }
 
+
         public override Status process() {
-            int i = 0;
-            while(i < childs.Count) {
+            for(int i = 0; i < childs.Count; i++) {
                 Status s = childs[i].process();
                 if(s == Status.Succes) {
-                    i++;
+                    return Status.Succes;
                 } else if(s == Status.Running)
                     return Status.Running;
-                else if(s == Status.Failure)
-                    return Status.Failure;
             }
-            return Status.Succes;
+            return Status.Failure;
         }
     }
 }

@@ -8,21 +8,25 @@ using Robocode;
 using Robocode.Util;
 
 namespace SVD {
+    /// <summary>
+    /// Attempts to shoot at the target
+    /// Requires Target variable on blackboard
+    /// Fails if GunHeat != 0
+    /// </summary>
     class ShootNode : ActionNode {
 
-        public ShootNode(BlackBoard blackBoard) : base(blackBoard) { }
+        //public ShootNode(BlackBoard blackBoard) : base(blackBoard) { }
 
         public override void init() {
         }
 
         public override Status process() {
             Robot robot = blackBoard.getData<Robot>("Robot");
-            if(robot.GunHeat != 0)
-                return Status.Failure;
+            double target = blackBoard.getData<double>("Target");
+            double power = blackBoard.getData<double>("FirePower");
 
-            double target = blackBoard.getData<double>("Target");            
             robot.TurnGunRight(Utils.NormalRelativeAngleDegrees(target - robot.GunHeading));            
-            robot.Fire(1);
+            robot.Fire(power);
             return Status.Succes;
         }
     }

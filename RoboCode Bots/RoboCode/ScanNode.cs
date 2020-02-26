@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using SVD.BehaviourTree;
 using Robocode;
+using System.Drawing;
 
 namespace SVD {
-    class FastScanNode : ActionNode {
+    class ScanNode : ActionNode {
 
-        public FastScanNode(BlackBoard blackBoard) : base(blackBoard) { }
+        //public ScanNode(BlackBoard blackBoard) : base(blackBoard) { }
 
         public override void init() {
         }
@@ -17,17 +18,12 @@ namespace SVD {
         public override Status process() {
             //also see OnScannedRobot in the main robot script
             Robot robot = blackBoard.getData<Robot>("Robot");
-            blackBoard.setData("ScanSucces",false);
-
-            robot.IsAdjustRadarForGunTurn = false;
-            robot.TurnGunRight(20 /** (right ? 1 : -1)*/);
             robot.TurnRadarRight(45 /** (right ? 1 : -1)*/);
-            robot.IsAdjustRadarForGunTurn = true;
 
-            if(blackBoard.getData<bool>("ScanSucces"))
-                return Status.Succes;
-            else
-                return Status.Failure;
+            robot.Out.WriteLine("Scan Node");
+            robot.SetAllColors(Color.Red);
+
+            return Status.Succes;
         }
     }
 }

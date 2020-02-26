@@ -8,16 +8,17 @@ namespace SVD.BehaviourTree {
     abstract class CompositeNode : BTNode {
         public List<BTNode> childs = new List<BTNode>();
 
-        public CompositeNode(BlackBoard blackBoard) : base(blackBoard) { }
+        //public CompositeNode(BlackBoard blackBoard) : base(blackBoard) { }
 
         /// <summary>
-        /// Returns this Node
+        /// Returns childs
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public CompositeNode addChild(BTNode node) {
+        public BTNode[] addChild(BTNode node) {
+            node.blackBoard = blackBoard;
             childs.Add(node);
-            return this;
+            return childs.ToArray();
         }
     }
 }

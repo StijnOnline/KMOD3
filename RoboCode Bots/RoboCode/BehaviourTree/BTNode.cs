@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace SVD.BehaviourTree {
     abstract class BTNode {
 
-        public BTNode(BlackBoard blackBoard) {
+        /*public BTNode(BlackBoard blackBoard) {
             this.blackBoard = blackBoard;
-        }
+        }*/
 
         //public bool initialized;
         private Status status;

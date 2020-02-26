@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SVD.BehaviourTree {
-    class RepeatUntilSucces : DecoratorNode {
-        public RepeatUntilSucces(BlackBoard blackBoard) : base(blackBoard) { }
+    class InverterNode : DecoratorNode {
+        //public RepeatUntilWinNode(BlackBoard blackBoard) : base(blackBoard) { }
         public override void init() {
         }
 
         public override Status process() {
             Status s = child.process();
-            if(s != Status.Succes)
+            if(s == Status.Running)
                 return Status.Running;
-            return Status.Succes;
+            else if(s == Status.Failure)
+                return Status.Succes;
+            else
+                return Status.Failure;
         }
     }
 }

@@ -17,65 +17,90 @@ namespace SVD {
 
 
         public override void Run() {
-            IsAdjustGunForRobotTurn = true;
-            int d = 1;
+            
+            tree = new TestTree(this);
+            tree.blackBoard.setData("FirePower", 5d);
+            tree.blackBoard.setData("TargetDist", 100d);
+            tree.blackBoard.setData("LastScan", -10d);
+            tree.blackBoard.setData("ScanDelay",10d);
 
-            //Test Tree
+            DecoratorNode repeater = new RepeatUntilWinNode();
+            tree.SetMaster(repeater);
+
+            CompositeNode sequencer = new SequenceNode();
+            repeater.setChild(sequencer);
+
+            //Scanning
             {
-                tree = new TestTree();
-                tree.init(this);
+                DecoratorNode scanInverter1 = new InverterNode();
+                sequencer.addChild(scanInverter1);
+                CompositeNode scanSequencer = new SequenceNode();
+                scanInverter1.setChild(scanSequencer);
 
-                CompositeNode sequencer = new SequenceNode(tree.blackBoard);
+                DecoratorNode scanInverter2 = new InverterNode();
+                scanSequencer.addChild(scanInverter2);
+                scanInverter2.setChild(new RecentlyScannedNode());
+                scanSequencer.addChild(new ScanNode());
+                
+            }
 
-                tree.masterNode = sequencer;
+            CompositeNode selector = new SelectorNode();
+            sequencer.addChild(selector);
 
-                //sequencer.addChild(new RepeatUntilSucces(tree.blackBoard).setChild(new FastScanNode(tree.blackBoard)));
-                //sequencer.addChild(new RepeatUntilSucces(tree.blackBoard).setChild(new ShootNode(tree.blackBoard)));
-                sequencer.addChild(new TurnNode(tree.blackBoard));
-                sequencer.addChild(new TurnNode(tree.blackBoard));
+            
 
+            //Move to range
+            {
+                selector.addChild(new DriveNode());
+            }
+            // Shooting
+            {
+                CompositeNode shootingSequencer = new SequenceNode();
+                selector.addChild(shootingSequencer);
+                shootingSequencer.addChild(new CheckGunHeatNode());
+                shootingSequencer.addChild(new ScanNode());
+                shootingSequencer.addChild(new ShootNode());
+            }
+            Out.WriteLine("Created Behaviour tree");
 
+            //Run Tree
+            {
                 BTNode.Status s;
                 do {
+                    Out.WriteLine("Running Tree:");
                     s = tree.process();
                 }
                 while(s == BTNode.Status.Running);
             }
 
+            //Old Manual Code
+            {
+                //IsAdjustGunForRobotTurn = true;
+                //int d = 1;
 
-
-
-
-
-
-            /*while(scanning) {
-                based on location guess best spin direction
-                Ahead(Rules.MAX_VELOCITY);
-                FastScan(true);
-            }
-            TurnRadarRight(Utils.NormalRelativeAngleDegrees((target - RadarHeading)) - 45d / 2d);
-            TurnGunRight(Utils.NormalRelativeAngleDegrees(target - GunHeading));
-            while(true) {
-                TurnRadarRight(Utils.NormalRelativeAngleDegrees((target - RadarHeading)) + 45d / 2d * d);
-                d *= -1;
-                if(GunHeat == 0) {
-
-                    TurnGunRight(Utils.NormalRelativeAngleDegrees(estimatetarget - GunHeading));
-                    Fire(1);
-                //} else if(GunHeat - GunCoolingRate <= 0) {
-                    //Ahead(Rules.MAX_VELOCITY);
-
-                } else {
+                /*while(scanning) {
+                    based on location guess best spin direction
                     Ahead(Rules.MAX_VELOCITY);
+                    FastScan(true);
                 }
+                TurnRadarRight(Utils.NormalRelativeAngleDegrees((target - RadarHeading)) - 45d / 2d);
+                TurnGunRight(Utils.NormalRelativeAngleDegrees(target - GunHeading));
+                while(true) {
+                    TurnRadarRight(Utils.NormalRelativeAngleDegrees((target - RadarHeading)) + 45d / 2d * d);
+                    d *= -1;
+                    if(GunHeat == 0) {
 
-            }*/
+                        TurnGunRight(Utils.NormalRelativeAngleDegrees(estimatetarget - GunHeading));
+                        Fire(1);
+                    //} else if(GunHeat - GunCoolingRate <= 0) {
+                        //Ahead(Rules.MAX_VELOCITY);
 
+                    } else {
+                        Ahead(Rules.MAX_VELOCITY);
+                    }
 
-
-
-
-
+                }*/
+            }
 
         }
 
@@ -94,14 +119,11 @@ namespace SVD {
 
 
         public override void OnScannedRobot(ScannedRobotEvent evnt) {
-            //scanning = false;
-            tree.blackBoard.setData("ScanSucces", true);
+            tree.blackBoard.setData("LastScan", (double) Time);
+            tree.blackBoard.setData("ScanEvent", evnt);
             double target = Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing);
             tree.blackBoard.setData("Target", target);
             //estimatetarget = PredictedGun(Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing), evnt.Distance, evnt.Heading, evnt.Velocity);
-
-            //Lock
-            //TurnRadarRight(2.0 * Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing - RadarHeading));
 
         }
 

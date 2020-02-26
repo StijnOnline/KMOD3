@@ -9,14 +9,18 @@ using Robocode;
 namespace SVD {
     class TestTree : BehaviourTree.BehaviourTree {
 
-        public void init(Robot robot) {
-            blackBoard = new BlackBoard();
-            
-            blackBoard.setData("Dir",90d);
+        public TestTree(Robot robot) {
+            blackBoard = new BlackBoard();            
             blackBoard.setData("Robot", robot);
         }
 
+        public void SetMaster(BTNode node) {
+            masterNode = node;
+            masterNode.blackBoard = blackBoard;
+        }
+
         public override void init() {
+
         }
 
         public override BTNode.Status process() {
