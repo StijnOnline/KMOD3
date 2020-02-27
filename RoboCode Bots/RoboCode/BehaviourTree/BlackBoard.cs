@@ -5,18 +5,32 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SVD.BehaviourTree {
-    class BlackBoard {
-        public Dictionary<string, object> values = new Dictionary<string, object>();
+    abstract class BlackBoard{
 
-        public T getData<T>(string name) {
-            return (T) values[name];
+        public object[] values;
+
+        public BlackBoard(Type e){
+            values = new object[Enum.GetNames(e).Length];
         }
-        public void setData(string name, object data) {
-            if(values.ContainsKey(name)) {
+
+        //public Dictionary<string, object> values = new Dictionary<string, object>();
+        
+            
+        /// <summary>
+        /// HANDLE OWN CASTING
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
+        public object getData(Enum variable) {
+            return values[(int)Enum.Parse(variable.GetType(), variable.ToString())];
+        }
+        public void setData(Enum variable, object data) {
+            /*if(values.ContainsKey(variable)) {
                 values[name] = data;
             } else {
                 values.Add(name, data);
-            }
+            }*/
+            values[(int)Enum.Parse(variable.GetType(), variable.ToString())] = data;
         }
     }
 }

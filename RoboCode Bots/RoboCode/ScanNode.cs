@@ -17,12 +17,13 @@ namespace SVD {
 
         public override Status process() {
             //also see OnScannedRobot in the main robot script
-            Robot robot = blackBoard.getData<Robot>("Robot");
-            robot.TurnRadarRight(45 /** (right ? 1 : -1)*/);
+
+            Robot robot = (Robot)blackBoard.getData(TestBlackboard.Vars.Robot);
+            robot.TurnRadarRight(45);
 
             robot.Out.WriteLine("Scan Node");
             robot.SetAllColors(Color.Red);
-
+            
             return Status.Succes;
         }
     }

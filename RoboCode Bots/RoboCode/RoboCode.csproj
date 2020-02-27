@@ -54,8 +54,10 @@
     <Compile Include="CheckGunHeatNode.cs" />
     <Compile Include="DriveNode.cs" />
     <Compile Include="BehaviourTree\InverterNode.cs" />
+    <Compile Include="InRangeNode.cs" />
     <Compile Include="RecentlyScannedNode.cs" />
     <Compile Include="RepeatUntilWinNode.cs" />
+    <Compile Include="TestBlackboard.cs" />
     <Compile Include="TestTree.cs" />
     <Compile Include="BehaviourTree\CompositeNode.cs" />
     <Compile Include="BehaviourTree\DecoratorNode.cs" />

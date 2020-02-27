@@ -15,8 +15,10 @@ namespace SVD {
         }
 
         public override Status process() {
-            Robot robot = blackBoard.getData<Robot>("Robot");
+
+            Robot robot = (Robot)blackBoard.getData(TestBlackboard.Vars.Robot);
             robot.TurnRight(10);
+
             return Status.Succes;
         }
     }

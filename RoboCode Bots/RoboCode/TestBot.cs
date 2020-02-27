@@ -9,6 +9,8 @@ namespace SVD {
     public class TestBot : Robot {
 
         TestTree tree;
+        TestBlackboard blackBoard;
+
         //bool scanning = true;
         //double target;
         //double estimatetarget;
@@ -17,12 +19,20 @@ namespace SVD {
 
 
         public override void Run() {
+
+            blackBoard = new TestBlackboard(typeof(TestBlackboard.Vars));
+            tree = new TestTree(blackBoard, this);
             
-            tree = new TestTree(this);
-            tree.blackBoard.setData("FirePower", 5d);
-            tree.blackBoard.setData("TargetDist", 100d);
-            tree.blackBoard.setData("LastScan", -10d);
-            tree.blackBoard.setData("ScanDelay",10d);
+            blackBoard.setData(TestBlackboard.Vars.FirePower, 5d);
+            blackBoard.setData(TestBlackboard.Vars.TargetDist, 100d);
+            blackBoard.setData(TestBlackboard.Vars.LastScan, -10d);
+            blackBoard.setData(TestBlackboard.Vars.ScanDelay,10d);
+
+
+            //tree.blackBoard.setData("FirePower", 5d);
+            //tree.blackBoard.setData("TargetDist", 100d);
+            //tree.blackBoard.setData("LastScan", -10d);
+            //tree.blackBoard.setData("ScanDelay",10d);
 
             DecoratorNode repeater = new RepeatUntilWinNode();
             tree.SetMaster(repeater);
@@ -119,10 +129,11 @@ namespace SVD {
 
 
         public override void OnScannedRobot(ScannedRobotEvent evnt) {
-            tree.blackBoard.setData("LastScan", (double) Time);
-            tree.blackBoard.setData("ScanEvent", evnt);
+            blackBoard.setData(TestBlackboard.Vars.LastScan, (double) Time);
+            blackBoard.setData(TestBlackboard.Vars.ScanEvent, evnt);
             double target = Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing);
-            tree.blackBoard.setData("Target", target);
+            blackBoard.setData(TestBlackboard.Vars.Target, target);
+            
             //estimatetarget = PredictedGun(Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing), evnt.Distance, evnt.Heading, evnt.Velocity);
 
         }

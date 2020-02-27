@@ -21,12 +21,15 @@ namespace SVD {
         }
 
         public override Status process() {
-            Robot robot = blackBoard.getData<Robot>("Robot");
-            double target = blackBoard.getData<double>("Target");
-            double power = blackBoard.getData<double>("FirePower");
 
-            robot.TurnGunRight(Utils.NormalRelativeAngleDegrees(target - robot.GunHeading));            
+            Robot robot = (Robot)blackBoard.getData(TestBlackboard.Vars.Robot);
+            double target = (double)blackBoard.getData(TestBlackboard.Vars.Target);
+            double power = (double)blackBoard.getData(TestBlackboard.Vars.FirePower);
+
+            robot.TurnGunRight(Utils.NormalRelativeAngleDegrees(target - robot.GunHeading));
             robot.Fire(power);
+
+
             return Status.Succes;
         }
     }

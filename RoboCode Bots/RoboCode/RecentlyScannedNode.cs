@@ -15,15 +15,15 @@ namespace SVD {
         }
 
         public override Status process() {
-            Robot robot = blackBoard.getData<Robot>("Robot");
-            double lastScan = blackBoard.getData<double>("LastScan");
-            double ScanDelay = blackBoard.getData<double>("ScanDelay");
+
+            Robot robot = (Robot)blackBoard.getData(TestBlackboard.Vars.Robot);
+            double lastScan = (double)blackBoard.getData(TestBlackboard.Vars.LastScan);
+            double ScanDelay = (double)blackBoard.getData(TestBlackboard.Vars.ScanDelay);
             robot.Out.WriteLine("Recently Scanned Node: " + (lastScan + ScanDelay > robot.Time));
             if(lastScan + ScanDelay > robot.Time)
                 return Status.Succes;
             else
                 return Status.Failure;
-            
         }
     }
 }

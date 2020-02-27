@@ -9,9 +9,9 @@ using Robocode;
 namespace SVD {
     class TestTree : BehaviourTree.BehaviourTree {
 
-        public TestTree(Robot robot) {
-            blackBoard = new BlackBoard();            
-            blackBoard.setData("Robot", robot);
+        public TestTree(BlackBoard blackboard, Robot robot) {
+            this.blackBoard = blackboard;
+            blackBoard.setData(TestBlackboard.Vars.Robot,robot);
         }
 
         public void SetMaster(BTNode node) {

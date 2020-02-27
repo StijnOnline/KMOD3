@@ -12,7 +12,7 @@ namespace SVD {
         }
 
         public override Status process() {
-            Robot robot = blackBoard.getData<Robot>("Robot");
+            Robot robot = (Robot)blackBoard.getData(TestBlackboard.Vars.Robot);
             robot.Ahead(Rules.MAX_VELOCITY);
             robot.Out.WriteLine("Drive Node");
             return Status.Succes;

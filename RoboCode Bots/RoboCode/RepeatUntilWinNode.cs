@@ -12,14 +12,14 @@ namespace SVD.BehaviourTree {
         }
 
         public override Status process() {
-            Robot r = blackBoard.getData<Robot>("Robot");
-            if(r == null)
-                return Status.Failure;
 
-            if(r.Others != 0) {
+            Robot robot = (Robot)blackBoard.getData(TestBlackboard.Vars.Robot);
+
+            if(robot.Others != 0) {
                 child.process();
                 return Status.Running;
             }
+
             return Status.Succes;
         }
     }
