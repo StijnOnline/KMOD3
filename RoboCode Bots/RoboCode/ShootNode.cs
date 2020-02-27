@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using SVD.BehaviourTree;
 using Robocode;
-using Robocode.Util;
 
 namespace SVD {
     /// <summary>
@@ -26,7 +25,7 @@ namespace SVD {
             double target = (double)blackBoard.getData(TestBlackboard.Vars.Target);
             double power = (double)blackBoard.getData(TestBlackboard.Vars.FirePower);
 
-            robot.TurnGunRight(Utils.NormalRelativeAngleDegrees(target - robot.GunHeading));
+            robot.TurnGunRight(Robocode.Util.Utils.NormalRelativeAngleDegrees(target - robot.GunHeading));
             robot.Fire(power);
 
 

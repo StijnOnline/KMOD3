@@ -12,11 +12,11 @@ namespace SVD {
         public enum Vars {
             Robot,
             FirePower,
-            TargetDist,
             LastScan,
             ScanDelay,
             Target,
-            ScanEvent
+            ScanEvent,
+            MaxDist,
         }
     }
 

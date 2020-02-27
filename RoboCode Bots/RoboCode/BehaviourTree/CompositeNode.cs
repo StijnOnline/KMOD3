@@ -11,7 +11,7 @@ namespace SVD.BehaviourTree {
         //public CompositeNode(BlackBoard blackBoard) : base(blackBoard) { }
 
         /// <summary>
-        /// Returns childs
+        /// Make sure this node is added to a parent before adding nodes to this node
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>

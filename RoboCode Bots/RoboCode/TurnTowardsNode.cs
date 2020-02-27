@@ -5,24 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using SVD.BehaviourTree;
 using Robocode;
-using System.Drawing;
 
 namespace SVD {
-    class ScanNode : ActionNode {
+    class TurnTowardsNode : ActionNode {
 
-        //public ScanNode(BlackBoard blackBoard) : base(blackBoard) { }
+        //public TurnNode(BlackBoard blackBoard) : base(blackBoard) { }
 
         public override void init() {
         }
 
         public override Status process() {
-            //also see OnScannedRobot in the main robot script
 
             Robot robot = (Robot)blackBoard.getData(TestBlackboard.Vars.Robot);
-            robot.TurnRadarRight(45);
+            double target = (double)blackBoard.getData(TestBlackboard.Vars.Target);
+            robot.TurnRight(Robocode.Util.Utils.NormalRelativeAngleDegrees(target - robot.Heading));
 
-            robot.Out.WriteLine("Scan Node");
-            
             return Status.Succes;
         }
     }

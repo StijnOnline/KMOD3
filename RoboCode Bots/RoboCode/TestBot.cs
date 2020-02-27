@@ -24,52 +24,55 @@ namespace SVD {
             tree = new TestTree(blackBoard, this);
             
             blackBoard.setData(TestBlackboard.Vars.FirePower, 5d);
-            blackBoard.setData(TestBlackboard.Vars.TargetDist, 100d);
             blackBoard.setData(TestBlackboard.Vars.LastScan, -10d);
-            blackBoard.setData(TestBlackboard.Vars.ScanDelay,10d);
+            blackBoard.setData(TestBlackboard.Vars.ScanDelay,5d);
+            blackBoard.setData(TestBlackboard.Vars.MaxDist,300d);
 
-
-            //tree.blackBoard.setData("FirePower", 5d);
-            //tree.blackBoard.setData("TargetDist", 100d);
-            //tree.blackBoard.setData("LastScan", -10d);
-            //tree.blackBoard.setData("ScanDelay",10d);
-
-            DecoratorNode repeater = new RepeatUntilWinNode();
-            tree.SetMaster(repeater);
-
-            CompositeNode sequencer = new SequenceNode();
-            repeater.setChild(sequencer);
-
-            //Scanning
+            //Build Tree
             {
-                DecoratorNode scanInverter1 = new InverterNode();
-                sequencer.addChild(scanInverter1);
-                CompositeNode scanSequencer = new SequenceNode();
-                scanInverter1.setChild(scanSequencer);
+                DecoratorNode repeater = new RepeatUntilWinNode();
+                tree.SetMaster(repeater);
+                CompositeNode sequencer = new SequenceNode();
+                repeater.setChild(sequencer);
+                //Scanning
+                {
+                    DecoratorNode scanInverter1 = new InverterNode();
+                    sequencer.addChild(scanInverter1);
+                    CompositeNode scanSequencer = new SequenceNode();
+                    scanInverter1.setChild(scanSequencer);
 
-                DecoratorNode scanInverter2 = new InverterNode();
-                scanSequencer.addChild(scanInverter2);
-                scanInverter2.setChild(new RecentlyScannedNode());
-                scanSequencer.addChild(new ScanNode());
-                
-            }
+                    DecoratorNode scanInverter2 = new InverterNode();
+                    scanSequencer.addChild(new ChangeColorNode(Color.Blue));
+                    scanSequencer.addChild(scanInverter2);
+                    scanInverter2.setChild(new RecentlyScannedNode());
+                    scanSequencer.addChild(new ScanNode());
 
-            CompositeNode selector = new SelectorNode();
-            sequencer.addChild(selector);
+                }
+                CompositeNode selector = new SelectorNode();
+                sequencer.addChild(selector);
+                //Move to range
+                {
+                    CompositeNode MoveToRangeSequencer = new SequenceNode();
+                    selector.addChild(MoveToRangeSequencer);
 
-            
-
-            //Move to range
-            {
-                selector.addChild(new DriveNode());
-            }
-            // Shooting
-            {
-                CompositeNode shootingSequencer = new SequenceNode();
-                selector.addChild(shootingSequencer);
-                shootingSequencer.addChild(new CheckGunHeatNode());
-                shootingSequencer.addChild(new ScanNode());
-                shootingSequencer.addChild(new ShootNode());
+                    MoveToRangeSequencer.addChild(new ChangeColorNode(Color.Green));
+                    MoveToRangeSequencer.addChild(new RecentlyScannedNode());
+                    DecoratorNode MoveToRangeInverter = new InverterNode();
+                    MoveToRangeSequencer.addChild(MoveToRangeInverter);
+                    MoveToRangeInverter.setChild(new InRangeNode());
+                    MoveToRangeSequencer.addChild(new TurnTowardsNode());
+                    MoveToRangeSequencer.addChild(new DriveNode());
+                }
+                // Shooting
+                {
+                    CompositeNode shootingSequencer = new SequenceNode();
+                    selector.addChild(shootingSequencer);
+                    shootingSequencer.addChild(new ChangeColorNode(Color.Red));
+                    shootingSequencer.addChild(new CheckGunHeatNode());
+                    shootingSequencer.addChild(new ScanNode());
+                    shootingSequencer.addChild(new ShootNode());
+                }
+                selector.addChild(new DoNothingNode());
             }
             Out.WriteLine("Created Behaviour tree");
 
@@ -77,7 +80,6 @@ namespace SVD {
             {
                 BTNode.Status s;
                 do {
-                    Out.WriteLine("Running Tree:");
                     s = tree.process();
                 }
                 while(s == BTNode.Status.Running);

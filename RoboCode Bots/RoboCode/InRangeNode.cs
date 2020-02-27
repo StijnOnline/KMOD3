@@ -14,14 +14,15 @@ namespace SVD {
         }
 
         public override Status process() {
-            Robot robot = (Robot)blackBoard.getData(TestBlackboard.Vars.Robot);
 
-
-            if(robot.GunHeat < robot.GunCoolingRate)
-                return Status.Succes;
-            else
+            ScannedRobotEvent ev = (ScannedRobotEvent) blackBoard.getData(TestBlackboard.Vars.ScanEvent);
+            double maxDist = (double) blackBoard.getData(TestBlackboard.Vars.MaxDist);
             
-            return Status.Failure;
+
+            if(ev.Distance < maxDist)
+                return Status.Succes;
+            else            
+                return Status.Failure;
                 
         }
     }
