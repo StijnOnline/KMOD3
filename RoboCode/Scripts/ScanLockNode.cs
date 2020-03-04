@@ -8,7 +8,7 @@ using Robocode;
 using System.Drawing;
 
 namespace SVD {
-    class ScanNode : ActionNode {
+    class ScanLockNode : ActionNode {
 
         //public ScanNode(BlackBoard blackBoard) : base(blackBoard) { }
 
@@ -19,10 +19,11 @@ namespace SVD {
             //also see OnScannedRobot in the main robot script
 
             Robot robot = (Robot)blackBoard.getData(TestBlackboard.Vars.Robot);
-            robot.TurnRadarRight(45);
+            ScannedRobotEvent scanEvent = (ScannedRobotEvent)blackBoard.getData(TestBlackboard.Vars.ScanEvent);
 
-            robot.Out.WriteLine("Scan Node");
-            
+            robot.TurnRadarRight(2.0 * Robocode.Util.Utils.NormalRelativeAngleDegrees(robot.Heading + scanEvent.Bearing - robot.RadarHeading));
+
+
             return Status.Succes;
         }
     }

@@ -15,10 +15,16 @@ namespace SVD.BehaviourTree {
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public BTNode[] addChild(BTNode node) {
+        public void addChild(BTNode node) {
             node.blackBoard = blackBoard;
             childs.Add(node);
-            return childs.ToArray();
+            //return childs.ToArray();
+        }
+
+        public void addChildren(params BTNode[] nodes) {
+            foreach(BTNode node in nodes) {
+                addChild(node);
+            }
         }
     }
 }
