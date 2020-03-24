@@ -10,11 +10,6 @@ using System.Drawing;
 namespace SVD {
     class ScanNode : ActionNode {
 
-        //public ScanNode(BlackBoard blackBoard) : base(blackBoard) { }
-
-        public override void init() {
-        }
-
         public override Status process() {
             //also see OnScannedRobot in the main robot script
 

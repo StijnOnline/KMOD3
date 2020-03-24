@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace SVD.BehaviourTree {
     class SequenceNode : CompositeNode {
-
-        //public SequenceNode(BlackBoard blackBoard) : base(blackBoard) { }
-
-        public override void init() {
-        }
+        
 
         public override Status process() {
             int i = 0;

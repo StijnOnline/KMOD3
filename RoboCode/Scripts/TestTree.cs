@@ -19,10 +19,6 @@ namespace SVD {
             masterNode.blackBoard = blackBoard;
         }
 
-        public override void init() {
-
-        }
-
         public override BTNode.Status process() {
             return masterNode.process();
         }

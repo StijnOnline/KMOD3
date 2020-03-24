@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 namespace SVD.BehaviourTree {
     class SelectorNode : CompositeNode {
 
-        //public SelectorNode(BlackBoard blackBoard) : base(blackBoard) { }
-
-        public override void init() {
-        }
-
 
         public override Status process() {
             for(int i = 0; i < childs.Count; i++) {

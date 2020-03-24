@@ -9,11 +9,6 @@ using Robocode;
 namespace SVD {
     class TurnNode : ActionNode {
 
-        //public TurnNode(BlackBoard blackBoard) : base(blackBoard) { }
-
-        public override void init() {
-        }
-
         public override Status process() {
 
             Robot robot = (Robot)blackBoard.getData(TestBlackboard.Vars.Robot);

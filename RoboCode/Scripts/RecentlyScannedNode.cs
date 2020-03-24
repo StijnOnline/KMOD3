@@ -9,11 +9,6 @@ using System.Threading.Tasks;
 namespace SVD {
     class RecentlyScannedNode : ActionNode {
 
-        //public RecentlyScannedNode(BlackBoard blackBoard) : base(blackBoard) { }
-
-        public override void init() {
-        }
-
         public override Status process() {
 
             Robot robot = (Robot)blackBoard.getData(TestBlackboard.Vars.Robot);

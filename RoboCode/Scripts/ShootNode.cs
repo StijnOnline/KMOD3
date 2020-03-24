@@ -13,11 +13,7 @@ namespace SVD {
     /// Fails if GunHeat != 0
     /// </summary>
     class ShootNode : ActionNode {
-
-        //public ShootNode(BlackBoard blackBoard) : base(blackBoard) { }
-
-        public override void init() {
-        }
+        
 
         public override Status process() {
 

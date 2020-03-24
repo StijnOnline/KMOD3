@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace SVD {
     class DriveNode : ActionNode {
-        public override void init() {
-        }
+        
 
         public override Status process() {
             Robot robot = (Robot)blackBoard.getData(TestBlackboard.Vars.Robot);

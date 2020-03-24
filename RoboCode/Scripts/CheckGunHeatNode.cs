@@ -8,10 +8,6 @@ using System.Threading.Tasks;
 
 namespace SVD {
     class CheckGunHeatNode : ActionNode {
-        //public CheckGunHeatNode(BlackBoard blackBoard) : base(blackBoard) { }
-
-        public override void init() {
-        }
 
         public override Status process() {
 

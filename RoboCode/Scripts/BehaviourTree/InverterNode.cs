@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace SVD.BehaviourTree {
     class InverterNode : DecoratorNode {
-        //public RepeatUntilWinNode(BlackBoard blackBoard) : base(blackBoard) { }
-        public override void init() {
-        }
 
         public override Status process() {
             Status s = child.process();

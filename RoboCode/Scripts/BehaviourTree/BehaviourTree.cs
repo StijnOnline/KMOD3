@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace SVD.BehaviourTree {
     abstract class BehaviourTree {
         public BTNode masterNode;
-        public BlackBoard blackBoard;
-        public abstract void init();        
+        public BlackBoard blackBoard;     
         public abstract BTNode.Status process();
     }
 }

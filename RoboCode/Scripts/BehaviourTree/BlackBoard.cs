@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 namespace SVD.BehaviourTree {
     abstract class BlackBoard{
 
-        public object[] values;
+        private object[] values;
 
         public BlackBoard(Type e){
             values = new object[Enum.GetNames(e).Length];
         }
-
-        //public Dictionary<string, object> values = new Dictionary<string, object>();
-        
             
         /// <summary>
         /// HANDLE OWN CASTING

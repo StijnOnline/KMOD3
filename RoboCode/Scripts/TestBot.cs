@@ -85,34 +85,7 @@ namespace SVD {
                 while(s == BTNode.Status.Running);
             }
 
-            //Old Manual Code
-            {
-                //IsAdjustGunForRobotTurn = true;
-                //int d = 1;
-
-                /*while(scanning) {
-                    based on location guess best spin direction
-                    Ahead(Rules.MAX_VELOCITY);
-                    FastScan(true);
-                }
-                TurnRadarRight(Utils.NormalRelativeAngleDegrees((target - RadarHeading)) - 45d / 2d);
-                TurnGunRight(Utils.NormalRelativeAngleDegrees(target - GunHeading));
-                while(true) {
-                    TurnRadarRight(Utils.NormalRelativeAngleDegrees((target - RadarHeading)) + 45d / 2d * d);
-                    d *= -1;
-                    if(GunHeat == 0) {
-
-                        TurnGunRight(Utils.NormalRelativeAngleDegrees(estimatetarget - GunHeading));
-                        Fire(1);
-                    //} else if(GunHeat - GunCoolingRate <= 0) {
-                        //Ahead(Rules.MAX_VELOCITY);
-
-                    } else {
-                        Ahead(Rules.MAX_VELOCITY);
-                    }
-
-                }*/
-            }
+            
 
         }
 

@@ -15,8 +15,6 @@ namespace SVD {
             this.color = color;
         }
 
-        public override void init() {
-        }
 
         public override Status process() {
 
