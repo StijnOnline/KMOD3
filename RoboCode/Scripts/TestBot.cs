@@ -36,7 +36,7 @@ namespace SVD {
                 repeater.setChild(sequencer);
                 //Scanning
                 {
-                    /*DecoratorNode scanInverter1 = new InverterNode();
+                    DecoratorNode scanInverter1 = new InverterNode();
                     sequencer.addChild(scanInverter1);
                     CompositeNode scanSequencer = new SequenceNode();
                     scanInverter1.setChild(scanSequencer);
@@ -44,18 +44,8 @@ namespace SVD {
                     DecoratorNode scanInverter2 = new InverterNode();
                     scanSequencer.addChild(new ChangeColorNode(Color.Blue));
                     scanSequencer.addChild(scanInverter2);
-                    scanInverter2.setChild(new RecentlyScannedNode());*/
-                    //scanSequencer.addChild(new ScanNode());
-                    //sequencer.addChild(new ScanNode());
-
-
-                    CompositeNode scanSelector = new SelectorNode();
-                    sequencer.addChild(scanSelector);
-                    CompositeNode scanSequencer = new SequenceNode();
-                    scanSelector.addChild(scanSequencer);
-                    scanSequencer.addChild(new RecentlyScannedNode());
-                    scanSequencer.addChild(new ScanLockNode());
-                    scanSelector.addChild(new FastScanNode());
+                    scanInverter2.setChild(new RecentlyScannedNode());
+                    scanSequencer.addChild(new ScanNode());
 
                 }
                 CompositeNode selector = new SelectorNode();
@@ -77,11 +67,9 @@ namespace SVD {
                 {
                     CompositeNode shootingSequencer = new SequenceNode();
                     selector.addChild(shootingSequencer);
-
-                    shootingSequencer.addChild(new RecentlyScannedNode());
                     shootingSequencer.addChild(new ChangeColorNode(Color.Red));
                     shootingSequencer.addChild(new CheckGunHeatNode());
-                    shootingSequencer.addChild(new FastScanNode());
+                    shootingSequencer.addChild(new ScanNode());
                     shootingSequencer.addChild(new ShootNode());
                 }
                 selector.addChild(new DoNothingNode());
@@ -147,10 +135,9 @@ namespace SVD {
             blackBoard.setData(TestBlackboard.Vars.ScanEvent, evnt);
             double target = Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing);
             blackBoard.setData(TestBlackboard.Vars.Target, target);
-
             
             //estimatetarget = PredictedGun(Utils.NormalRelativeAngleDegrees(Heading + evnt.Bearing), evnt.Distance, evnt.Heading, evnt.Velocity);
-            
+
         }
 
 
